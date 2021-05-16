@@ -4,8 +4,14 @@ const morgan = require('morgan');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 // Middleware - processing the incoming data. it stands between the request and the response. It adds the data coming from the request to the request object/body (it also parse it to JS object) //////////////////////////////////////
-app.use(morgan('dev'));
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
+
 app.use((req, res, next) => {
   console.log('Hello from the middleware 😁');
   next();
