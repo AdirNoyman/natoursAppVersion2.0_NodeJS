@@ -7,16 +7,19 @@ const {
   getTour,
   updateTour,
   deleteTour,
-  checKId,
   checKBody,
+  aliasTopTours,
 } = tourController;
 
 // Router is middleware
 const router = express.Router();
 
-router.param('id', checKId);
+// alias route for cheap tours
+router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
-router.route('/').get(getAllTours).post(checKBody, createTour);
+// router.param('id', checKId);
+
+router.route('/').get(getAllTours).post(createTour);
 router.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
 
 module.exports = router;
